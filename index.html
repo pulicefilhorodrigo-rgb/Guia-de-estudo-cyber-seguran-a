@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roadmap Cibersegurança (Slides)</title>
+  <style>
+    :root{
+      --bg:#0b1020; --panel:#111a33; --text:#e7ecff; --muted:#a9b3da;
+      --accent:#6aa6ff; --accent2:#7cffc1;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(106,166,255,.25), transparent 55%),
+                  radial-gradient(900px 500px at 80% 30%, rgba(124,255,193,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,16,32,.7);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .wrap{max-width:1000px; margin:0 auto; padding:16px 18px;}
+    .topbar{display:flex; gap:12px; align-items:center; justify-content:space-between;}
+    .brand{display:flex; flex-direction:column; gap:2px;}
+    .brand h1{margin:0; font-size:14px; font-weight:700; letter-spacing:.2px; color:var(--muted)}
+    .brand .title{font-size:18px; font-weight:800; color:var(--text)}
+    .actions{display:flex; gap:10px; align-items:center;}
+    button, select{
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    button:hover{border-color: rgba(106,166,255,.6)}
+    .grid{display:grid; grid-template-columns: 1fr; gap:16px; padding:18px;}
+    .card{
+      background: rgba(17,26,51,.7);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card-inner{padding:18px;}
+
+    /* Slides */
+    .slides{min-height: 520px;}
+    .slide{
+      display:none;
+      animation: fade .25s ease-in-out;
+    }
+    .slide.active{display:block;}
+    @keyframes fade{from{opacity:0; transform: translateY(4px)} to{opacity:1; transform: translateY(0)}}
+
+    .kicker{color:var(--muted); font-weight:800; font-size:12px; letter-spacing:.3px; text-transform:uppercase;}
+    h2{margin:8px 0 10px; font-size:28px; line-height:1.15}
+    p{margin:10px 0; color:var(--muted); font-size:15px; line-height:1.6}
+    ul{margin:10px 0 0; padding-left:18px; color:var(--muted)}
+    li{margin:8px 0; font-size:15px; line-height:1.6}
+
+    .two-col{display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:14px}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:10px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      color:var(--text);
+      font-weight:800;
+      font-size:13px;
+    }
+    .pill .dot{width:10px; height:10px; border-radius:50%}
+    .dot.accent{background: var(--accent)}
+    .dot.accent2{background: var(--accent2)}
+
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:14px 18px; border-top:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.12);
+    }
+    .nav .left, .nav .right{display:flex; gap:10px; align-items:center;}
+    .progress{
+      color:var(--muted); font-weight:800; font-size:13px;
+      display:flex; gap:10px; align-items:center;
+    }
+    .bar{
+      width:180px; height:10px; border-radius:999px;
+      background: rgba(255,255,255,.08);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .bar > span{
+      display:block; height:100%; width:0%;
+      background: linear-gradient(90deg, rgba(106,166,255,.9), rgba(124,255,193,.85));
+      border-radius:999px;
+      transition: width .25s ease;
+    }
+
+    .notes{
+      margin-top:14px; padding:14px;
+      background: rgba(0,0,0,.16);
+      border: 1px dashed rgba(255,255,255,.18);
+      border-radius: 14px;
+    }
+    .notes label{color:var(--muted); font-weight:900; font-size:13px; display:block; margin-bottom:8px}
+    textarea{
+      width:100%; min-height:110px; resize:vertical;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding:12px;
+      color:var(--text);
+      outline:none;
+      line-height:1.4;
+      font-weight:600;
+    }
+    textarea:focus{border-color: rgba(106,166,255,.7)}
+
+    .footer{
+      padding:18px; color:var(--muted); font-size:13px;
+    }
+    a{color:var(--accent)}
+
+    @media (max-width: 850px){
+      .two-col{grid-template-columns:1fr}
+      .bar{width:120px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <h1>Slides + anotações</h1>
+          <div class="title">Roadmap Cibersegurança (30 dias) — iniciação</div>
+        </div>
+        <div class="actions">
+          <select id="slideSelect" aria-label="Selecionar slide"></select>
+          <button id="btnReset" title="Limpar anotações locais">Resetar anotações</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="card slides" aria-live="polite">
+      <div class="card-inner">
+
+        <!-- Slide 1 -->
+        <article class="slide" data-slide="0">
+          <div class="kicker">Como usar</div>
+          <h2>Roadmap em slides (e com progresso)</h2>
+          <p>
+            Este site mostra o que estudar e o que praticar. Você pode navegar pelos slides e salvar
+            anotações localmente no seu navegador.
+          </p>
+          <div class="two-col">
+            <div>
+              <span class="pill"><span class="dot accent"></span> Navegar</span>
+              <ul>
+                <li>Use <b>Anterior</b>/<b>Próximo</b></li>
+                <li>Ou clique no menu suspenso</li>
+                <li>Teclas: <b>←</b> e <b>→</b></li>
+              </ul>
+            </div>
+            <div>
+              <span class="pill"><span class="dot accent2"></span> Anotações</span>
+              <ul>
+                <li>As anotações ficam salvas no seu navegador</li>
+                <li>Funciona offline depois de carregar a página</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="notes">
+            <label>Notas do Slide</label>
+            <textarea id="notes-0" placeholder="Escreva aqui... (salva automaticamente)"></textarea>
+          </div>
+        </article>
+
+        <!-- Slide 2 -->
+        <article class="slide" data-slide="1">
+          <div class="kicker">Semana 1</div>
+          <h2>Base: Linux + Redes</h2>
+          <p>
+            Objetivo: ficar confortável no terminal e entender o que são IP/portas/protocolos.
+          </p>
+          <ul>
+            <li><b>Linux:</b> terminal, permissões (chmod/chown), processos básicos, logs</li>
+            <li><b>Redes:</b> IP/porta/TCP/UDP, DNS, HTTP/HTTPS</li>
+            <li><b>Prática:</b> 3–5 labs guiados (OverTheWire + um introdutório)</li>
+          </ul>
+          <div class="notes">
+            <label>Notas do Slide</label>
+            <textarea id="notes-1" placeholder="Escreva aqui... (salva automaticamente)"></textarea>
+          </div>
+        </article>
+
+        <!-- Slide 3 -->
+        <article class="slide" data-slide="2">
+          <div class="kicker">Semana 2</div>
+          <h2>Ferramentas: Recon/discovery</h2>
+          <p>
+            Objetivo: executar scans simples e entender o que os resultados significam.
+          </p>
+          <ul>
+            <li><b>Nmap:</b> scan básico e interpretação de portas/serviços</li>
+            <li><b>Conceito:</b> o que é “serviço”, “porta”, “protocolo”</li>
+            <li><b>Prática:</b> labs guiados focados em recon/descoberta</li>
+          </ul>
+          <div class="notes">
+            <label>Notas do Slide</label>
+            <textarea id="notes-2" placeholder="Escreva aqui... (salva automaticamente)"></textarea>
+          </div>
+        </article>
+
+        <!-- Slide 4 -->
+        <article class="slide" data-slide="3">
+          <div class="kicker">Semana 3</div>
+          <h2>Vulnerabilidades (nível iniciante)</h2>
+          <p>
+            Objetivo: entender como uma falha vira um problema real e treinar em labs guiados.
+          </p>
+          <ul>
+            <li>Ideia geral de exploração: “como a vulnerabilidade aparece”</li>
+            <li>Revisar permissões e falhas comuns em sistemas</li>
+            <li>Prática: CTFs/labs guiados (seguindo passo a passo)</li>
+          </ul>
+          <div class="notes">
+            <label>Notas do Slide</label>
+            <textarea id="notes-3" placeholder="Escreva aqui... (salva automaticamente)"></textarea>
+          </div>
+        </article>
+
+        <!-- Slide 5 -->
+        <article class="slide" data-slide="4">
+          <div class="kicker">Semana 4</div>
+          <h2>Consolidar + mini-projeto + relatório</h2>
+          <p>
+            Objetivo: transformar o aprendizado em algo que você consegue reaplicar.
+          </p>
+          <ul>
+            <li>Mini-projeto: checklist + script pequeno (ex: coletar/organizar logs)</li>
+            <li>Relatório de cada lab: <b>objetivo → tentativas → resultado → aprendizado</b></li>
+            <li>Fechar lacunas do que você travou nas semanas anteriores</li>
+          </ul>
+          <div class="notes">
+            <label>Notas do Slide</label>
+            <textarea id="notes-4" placeholder="Escreva aqui... (salva automaticamente)"></textarea>
+          </div>
+        </article>
+
+        <!-- Slide 6 -->
+        <article class="slide" data-slide="5">
+          <div class="kicker">Checklist</div>
+          <h2>O que você deve conseguir no final</h2>
+          <p>
+            Se você chegou aqui, seu início está sólido.
+          </p>
+          <ul>
+            <li>Usar Linux com calma (permissões, logs e processos básicos)</li>
+            <li>Entender redes: o que significam portas/protocolos</li>
+            <li>Rodar scans simples e explicar o que viu</li>
+            <li>Escrever um mini-relatório de aprendizado por lab</li>
+          </ul>
+          <div class="notes">
+            <label>Notas do Slide</label>
+            <textarea id="notes-5" placeholder="Escreva aqui... (salva automaticamente)"></textarea>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="nav">
+        <div class="left">
+          <button id="btnPrev">← Anterior</button>
+          <button id="btnNext">Próximo →</button>
+        </div>
+        <div class="progress">
+          <span id="labelProgress">Slide 1/6</span>
+          <div class="bar" aria-hidden="true"><span id="barFill"></span></div>
+        </div>
+        <div class="right" style="opacity:.001">.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-inner">
+        <div class="kicker">Ativar o site “sempre ligado”</div>
+        <h2 style="margin-top:10px; font-size:20px">Como deixar ativo para entrar a qualquer hora</h2>
+        <p>
+          Você tem 2 opções:
+        </p>
+        <ul>
+          <li><b>Local (rápido):</b> abre com um servidor simples no seu PC.</li>
+          <li><b>Online (acessível de qualquer lugar):</b> fazer deploy (ex: GitHub Pages, Cloudflare Pages).</li>
+        </ul>
+        <p>
+          Para usar agora (local), abra este arquivo em um servidor simples:
+        </p>
+        <p style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">
+          cd cyber-roadmap-site
+          <br/>
+          python3 -m http.server 8080
+          <br/>
+          Depois abra: <a href="http://localhost:8080">http://localhost:8080</a>
+        </p>
+        <p>
+          Se você quiser que fique realmente online “sem o PC ligado”, eu te passo o passo a passo pra GitHub Pages/Cloudflare.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="footer">
+    Dica: se você quiser, eu ajusto o conteúdo do roadmap (Web/Pentest/Defesa) conforme sua escolha.
+  </div>
+
+  <script>
+    const totalSlides = 6;
+    const storageKeyBase = 'cyberRoadmapNotes_v1_slide_';
+
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const select = document.getElementById('slideSelect');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const labelProgress = document.getElementById('labelProgress');
+    const barFill = document.getElementById('barFill');
+    const btnReset = document.getElementById('btnReset');
+
+    const slideLabels = [
+      'Como usar',
+      'Semana 1: Base',
+      'Semana 2: Recon',
+      'Semana 3: Vulnerabilidades',
+      'Semana 4: Consolidar',
+      'Checklist final'
+    ];
+
+    function setActive(i){
+      const clamped = Math.max(0, Math.min(totalSlides-1, i));
+      slides.forEach(s => s.classList.toggle('active', Number(s.dataset.slide) === clamped));
+
+      select.value = String(clamped);
+      labelProgress.textContent = `Slide ${clamped+1}/${totalSlides}`;
+      barFill.style.width = `${((clamped+1)/totalSlides)*100}%`;
+
+      const textareas = document.querySelectorAll('textarea[id^="notes-"]');
+      // apenas UI; salvar é automático
+    }
+
+    function saveNotes(slideIndex){
+      const ta = document.getElementById(`notes-${slideIndex}`);
+      if(!ta) return;
+      localStorage.setItem(storageKeyBase + slideIndex, ta.value);
+    }
+
+    function loadNotes(slideIndex){
+      const ta = document.getElementById(`notes-${slideIndex}`);
+      if(!ta) return;
+      const v = localStorage.getItem(storageKeyBase + slideIndex);
+      if(v !== null) ta.value = v;
+    }
+
+    // Build select options
+    for(let i=0;i<totalSlides;i++){
+      const opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = `${i+1}. ${slideLabels[i]}`;
+      select.appendChild(opt);
+    }
+
+    // Load notes for all slides
+    for(let i=0;i<totalSlides;i++) loadNotes(i);
+
+    // Change handlers
+    select.addEventListener('change', (e) => setActive(Number(e.target.value)));
+
+    btnPrev.addEventListener('click', () => {
+      const current = Number(select.value);
+      setActive(current - 1);
+    });
+    btnNext.addEventListener('click', () => {
+      const current = Number(select.value);
+      setActive(current + 1);
+    });
+
+    // Save notes on input
+    for(let i=0;i<totalSlides;i++){
+      const ta = document.getElementById(`notes-${i}`);
+      if(!ta) continue;
+      ta.addEventListener('input', () => saveNotes(i));
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowLeft'){
+        const current = Number(select.value);
+        setActive(current - 1);
+      }
+      if(e.key === 'ArrowRight'){
+        const current = Number(select.value);
+        setActive(current + 1);
+      }
+    });
+
+    btnReset.addEventListener('click', () => {
+      if(!confirm('Resetar anotações salvas localmente no navegador?')) return;
+      for(let i=0;i<totalSlides;i++){
+        localStorage.removeItem(storageKeyBase + i);
+        const ta = document.getElementById(`notes-${i}`);
+        if(ta) ta.value = '';
+      }
+    });
+
+    // Restore last slide
+    const last = localStorage.getItem('cyberRoadmap_lastSlide_v1');
+    setActive(last ? Number(last) : 0);
+
+    select.addEventListener('change', () => {
+      localStorage.setItem('cyberRoadmap_lastSlide_v1', select.value);
+    });
+    // persist also on navigation buttons
+    btnPrev.addEventListener('click', () => localStorage.setItem('cyberRoadmap_lastSlide_v1', select.value));
+    btnNext.addEventListener('click', () => localStorage.setItem('cyberRoadmap_lastSlide_v1', select.value));
+  </script>
+</body>
+</html>
+
